@@ -3,6 +3,8 @@
 
 ZaberShield shield(ZABERSHIELD_ADDRESS_AA);
 ZaberAscii za(shield);
+
+boolean ShouldMove = true;
  
 void setup() {
   /* Initialize baudrate to 115200, typical for Zaber ASCII devices */
@@ -14,21 +16,24 @@ void setup() {
   za.receive();
   /* Wait for the move command to finish moving. */
   za.pollUntilIdle(1);
-
 }
  
 void loop() {
  /* Issue a position */
- za.send(1, "move abs", 533333);
- za.receive();
- /* Wait for the move command to finish moving. */
- za.pollUntilIdle(1);
+  if (ShouldMove==true) {
+    za.send(1, "move abs", 533333);
+    za.receive();
+    /* Wait for the move command to finish moving. */
+    za.pollUntilIdle(1);
 
- delay (500);
+    delay (500);
 
- /* Issue a position */
- za.send(1, "move abs", 1);
- za.receive();
- za.pollUntilIdle(1);
+    /* Issue a position */
+    za.send(1, "move abs", 1);
+    za.receive();
+    za.pollUntilIdle(1);
+
+    ShouldMove = false;
+  }
 }
 
