@@ -24,14 +24,8 @@ void loop() {
 int currentState = digitalRead(pin);
 
 if (lastState == LOW & currentState == HIGH) {
-   MoveForward();
+   RunTrial();
 
-   digitalWrite(LEDpin, HIGH);
-   delay(500);
-   digitalWrite(LEDpin, LOW);
-
-   MoveBackwards();
-   
    lastState = HIGH;
    }
 else if (currentState == LOW){
@@ -45,12 +39,21 @@ void MoveForward (){
     za.receive();
     za.pollUntilIdle(1);
 
-    Serial.println("Moving forward");
 }
 
 void MoveBackwards (){
     za.send(1, "move abs", 1);
     za.receive();
     za.pollUntilIdle(1);
+}
+
+void RunTrial (){
+  MoveForward();
+
+  digitalWrite(LEDpin, HIGH);
+  delay(500);
+  digitalWrite(LEDpin, LOW);
+
+  MoveBackwards();
 }
 
