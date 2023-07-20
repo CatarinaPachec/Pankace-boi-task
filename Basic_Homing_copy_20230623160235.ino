@@ -5,7 +5,9 @@ ZaberShield shield(ZABERSHIELD_ADDRESS_AA);
 ZaberAscii za(shield);
 
 const int pin = 2;
-const int LEDpin = 4;
+const int Forwardpin = 4;
+const int Soundpin = 5;
+const int Backwardspin = 6;
 int lastState = LOW;
 
  
@@ -16,7 +18,9 @@ void setup() {
   MoveBackwards();
 
   pinMode(pin, INPUT);
-  pinMode(LEDpin, OUTPUT);
+  pinMode(Forwardpin, OUTPUT);
+  pinMode(Soundpin, OUTPUT);
+  pinMode(Backwardspin, OUTPUT);
 }
  
 void loop() {
@@ -48,12 +52,16 @@ void MoveBackwards (){
 }
 
 void RunTrial (){
+  digitalWrite(Forwardpin, HIGH);
   MoveForward();
+  digitalWrite(Forwardpin, LOW);
 
-  digitalWrite(LEDpin, HIGH);
+  digitalWrite(Soundpin, HIGH);
   delay(500);
-  digitalWrite(LEDpin, LOW);
+  digitalWrite(Soundpin, LOW);
 
+  digitalWrite(Backwardspin, HIGH);
   MoveBackwards();
+  digitalWrite(Backwardspin, LOW);
 }
 
