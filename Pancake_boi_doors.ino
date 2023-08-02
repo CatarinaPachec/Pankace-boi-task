@@ -1,29 +1,46 @@
 #include <Servo.h>
 
 Servo servo;
-const int interruptPin = 2; 
 const int servoPin = 4;
-int servoPosition = 0;
+const int Pin = 5;
+bool moveRight = true; // Flag to determine the movement direction
+bool OpeningSignal = false;
+bool ClosingSignal = false;
+bool IsOpen = false;
+bool signal = LOW; 
 
-void interruptFunction() {
-  // Increment servo position
-  servoPosition += 10; // Change this according to your requirements
-  if (servoPosition > 180) {
-    servoPosition = 180;
-  }
-  servo.write(servoPosition);
-}
-
-
-void setup()
-{
+void setup() {
   Serial.begin(9600);
-  
-  servo.attach(servoPin); 
-  attachInterrupt(digitalPinToInterrupt(interruptPin), interruptFunction, RISING);
+  pinMode(Pin, INPUT);
+
+  // servo.attach(servoPin);
+  // servo.write(0);
 }
 
-void loop()
-{
+void loop() {
+int signal = digitalRead(Pin);
+// Serial.println(signal);
+
+if (signal == HIGH) {
+  OpeningSignal = true;
+  } else {
+    ClosingSignal = true;
+    }
+
+if (OpeningSignal == true & IsOpen == false) {
+      //  servo.write(50);
+       Serial.println("Opening");
+       delay(500); 
+       OpeningSignal = false;
+       IsOpen = true;      
+}
+
+if (ClosingSignal == true & IsOpen == true) {
+      //  servo.write(50);
+       Serial.println("Closing");
+       delay(500); 
+       ClosingSignal = false;
+       IsOpen = false;       
+}
 
 }

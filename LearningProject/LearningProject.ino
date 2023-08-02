@@ -4,7 +4,9 @@ Servo servo;
 const int servoPin = 4;
 const int Pin = 5;
 bool moveRight = true; // Flag to determine the movement direction
-bool movesignal = false;
+bool OpeningSignal = false;
+bool ClosingSignal = false;
+bool IsOpen = false;
 bool signal = LOW; 
 
 void setup() {
@@ -20,24 +22,26 @@ int signal = digitalRead(Pin);
 // Serial.println(signal);
 
 if (signal == HIGH) {
-  movesignal = true;
-  }
-
-if (movesignal == true) {
-    if (moveRight) {
-      //  servo.write(50);
-       Serial.println("move right");
-       delay(1000); 
-       moveRight = !moveRight;
-     } else {
-      //  servo.write(0);
-       Serial.println("move left");
-       moveRight = !moveRight;
-       movesignal = false;
-       Serial.println("move stop");
+  OpeningSignal = true;
+  } else {
+    ClosingSignal = true;
     }
 
-  }
+if (OpeningSignal == true & IsOpen == false) {
+      //  servo.write(50);
+       Serial.println("Opening");
+       delay(500); 
+       OpeningSignal = false;
+       IsOpen = true;      
+}
+
+if (ClosingSignal == true & IsOpen == true) {
+      //  servo.write(50);
+       Serial.println("Closing");
+       delay(500); 
+       ClosingSignal = false;
+       IsOpen = false;       
+}
 
 }
 
