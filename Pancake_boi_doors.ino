@@ -2,7 +2,7 @@
 
 Servo servo;
 const int interruptPin = 2; 
-const int servoPin = 4
+const int servoPin = 4;
 int servoPosition = 0;
 
 void interruptFunction() {
@@ -17,11 +17,12 @@ void interruptFunction() {
 
 void setup()
 {
-  Serial.begin(9600)
+  Serial.begin(9600);
   
   servo.attach(servoPin); 
   attachInterrupt(digitalPinToInterrupt(interruptPin), interruptFunction, RISING);
 }
+
 void loop()
 {
 
